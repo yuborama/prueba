@@ -3,8 +3,6 @@ from flask import request
 import pandas as pd
 from datetime import datetime
 
-
-
 data = pd.read_csv('data.csv', names=['s', 'e', 'm']).set_index('m')
 
 series = pd.Series(index=range(data.s.min(), datetime.now().year + 1))
