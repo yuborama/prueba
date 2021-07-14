@@ -3,12 +3,6 @@ from flask import request,jsonify
 import pandas as pd
 from datetime import datetime
 
-data = pd.read_csv('data.csv', names=['s', 'e', 'm']).set_index('m')
-
-series = pd.Series(index=range(data.s.min(), datetime.now().year + 1))
-for m in data.index:
-    series.loc[data.loc[m].s:data.loc[m].e] = m
-
 app = flask.Flask(__name__)
 
 def convertStrToDate(date):
@@ -35,7 +29,11 @@ def calculateminutes(list):
 
 @app.route('/', methods=['GET'])
 def home():
-    return jsonify({'message':'please all data'})
+    return jsonify({'message':'Api init'})
+
+@app.route('/', methods=['POST'])
+def home():
+    return jsonify({'message':'please send all data'})
 
 @app.route('/ping', methods=['GET'])
 def ping():
