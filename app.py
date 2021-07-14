@@ -1,7 +1,29 @@
 import flask
 from flask import request
 import pandas as pd
-from datetime import datetime as dt
+from datetime import datetime
+
+def convertStrToDate(date):
+    if(type(date)==datetime):
+        return date
+    else:
+        if(len(date)>=21):
+            return datetime.strptime(date, '%m/%d/%Y %I:%M:%S %p')
+        return datetime.strptime(date, '%m/%d/%Y')
+
+def date(str):
+    list = []
+    x = 0
+    for fecha in str:
+        list.append(convertStrToDate(fecha))
+    return pd.Series(list)
+
+def calculateminutes(list):
+    l = []
+    for date in list:
+        l.append(int(date.seconds / 60))
+    return pd.Series(l)
+
 
 data = pd.read_csv('data.csv', names=['s', 'e', 'm']).set_index('m')
 
