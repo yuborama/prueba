@@ -32,7 +32,7 @@ def home():
     return jsonify({'message':'Api init'})
 
 @app.route('/', methods=['POST'])
-def home():
+def homepost():
     return jsonify({'message':'please send all data'})
 
 @app.route('/ping', methods=['GET'])
