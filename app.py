@@ -19,3 +19,7 @@ def home():
         return series.loc[year]
     except KeyError:
         return f'Invalid input ({series.index.min()} - {series.index.max()})'
+
+@app.route('/ping', methods=['GET'])
+def ping():
+    return {"message":"pong"}
