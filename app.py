@@ -35,6 +35,14 @@ def calculateminutes(list):
 
 @app.route('/', methods=['GET'])
 def home():
+    return jsonify({'message':'please all data'})
+
+@app.route('/ping', methods=['GET'])
+def ping():
+    return {"message":"pong"}
+
+@app.route('/file', methods=['GET'])
+def recivedfile():
     file = request.files["filename"]
     if file:
         archivo = pd.read_excel(file)
@@ -44,7 +52,3 @@ def home():
         data = fechas.loc[fechas['P/N*']=='N'].groupby('Subcódigo*').sum().reset_index().to_dict('records')
         return jsonify({'data':data})
     return jsonify({'message':'please all data'})
-
-@app.route('/ping', methods=['GET'])
-def ping():
-    return {"message":"pong"}
