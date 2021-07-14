@@ -3,6 +3,16 @@ from flask import request
 import pandas as pd
 from datetime import datetime
 
+
+
+data = pd.read_csv('data.csv', names=['s', 'e', 'm']).set_index('m')
+
+series = pd.Series(index=range(data.s.min(), dt.now().year + 1))
+for m in data.index:
+    series.loc[data.loc[m].s:data.loc[m].e] = m
+
+app = flask.Flask(__name__)
+
 def convertStrToDate(date):
     if(type(date)==datetime):
         return date
@@ -23,15 +33,6 @@ def calculateminutes(list):
     for date in list:
         l.append(int(date.seconds / 60))
     return pd.Series(l)
-
-
-data = pd.read_csv('data.csv', names=['s', 'e', 'm']).set_index('m')
-
-series = pd.Series(index=range(data.s.min(), dt.now().year + 1))
-for m in data.index:
-    series.loc[data.loc[m].s:data.loc[m].e] = m
-
-app = flask.Flask(__name__)
 
 
 @app.route('/', methods=['GET'])
