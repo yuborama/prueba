@@ -1,5 +1,5 @@
 import flask
-from flask import request
+from flask import request,jsonify
 import pandas as pd
 from datetime import datetime
 
@@ -35,11 +35,15 @@ def calculateminutes(list):
 
 @app.route('/', methods=['GET'])
 def home():
-    year = int(request.args['year'])
-    try:
-        return series.loc[year]
-    except KeyError:
-        return f'Invalid input ({series.index.min()} - {series.index.max()})'
+    file = request.files["filename"]
+    if file:
+        archivo = pd.read_excel(file)
+        fechas = archivo[['Desde*','Hasta*','Subcódigo*','P/N*']].copy()
+        fechas['Tiempo'] = date(fechas['Hasta*'])-date(fechas['Desde*'])
+        fechas['minutes']= calculateminutes(fechas['Tiempo'])
+        data = fechas.loc[fechas['P/N*']=='N'].groupby('Subcódigo*').sum().reset_index().to_dict('records')
+        return jsonify({'data':data})
+    return jsonify({'message':'please all data'})
 
 @app.route('/ping', methods=['GET'])
 def ping():
