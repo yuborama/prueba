@@ -7,7 +7,7 @@ from datetime import datetime
 
 data = pd.read_csv('data.csv', names=['s', 'e', 'm']).set_index('m')
 
-series = pd.Series(index=range(data.s.min(), dt.now().year + 1))
+series = pd.Series(index=range(data.s.min(), datetime.now().year + 1))
 for m in data.index:
     series.loc[data.loc[m].s:data.loc[m].e] = m
 
