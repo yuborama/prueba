@@ -12,13 +12,13 @@ for m in data.index:
 app = flask.Flask(__name__)
 
 
-@app.route('/', methods=['GET'])
-def home():
-    year = int(request.args['year'])
-    try:
-        return series.loc[year]
-    except KeyError:
-        return f'Invalid input ({series.index.min()} - {series.index.max()})'
+# @app.route('/', methods=['GET'])
+# def home():
+#     year = int(request.args['year'])
+#     try:
+#         return series.loc[year]
+#     except KeyError:
+#         return f'Invalid input ({series.index.min()} - {series.index.max()})'
 
 @app.route('/', methods=['GET'])
 def home():
